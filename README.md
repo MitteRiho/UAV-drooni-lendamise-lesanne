@@ -1,6 +1,6 @@
 # UAV drooni lendamise ülesanne
 
-Ülesande mõte on saada UAV lendamise simuleerimine tööle Linux'il ning seejärel optimeerida lendamistrajektoori MRS keskkonnas (Multi-robot Systems Group UAV system), kasutades Apptainer'it. Ülesanne põhineb "MRS Summer School 2024" ning on tehtud eesti keelseks Robotitehnika aine raames. See juhend pole 1-1 ning on proovitud teha võimalikult lihtsalt ja jälgitavaks, kuid originaaljuhendi saab leida MRS summer school [github](https://github.com/ctu-mrs/summer-school-2024)'i lehelt.
+Ülesande mõte on saada UAV lendamise simuleerimine tööle Linux'il ning seejärel optimeerida lendamistrajektoori MRS keskkonnas (Multi-robot Systems Group UAV system), kasutades Apptainer'it. Ülesanne põhineb "MRS Summer School 2024" ning on tehtud eesti keelseks Robotitehnika aine raames. See juhend pole 1-1 ning on proovitud teha võimalikult lihtsalt ja jälgitavaks (lisades kirjeldusi erinevatele lisaprotsessidele), kuid ülesannet selgitava juhendi saab leida MRS summer school [github](https://github.com/ctu-mrs/summer-school-2024)'i lehelt.
 
 ## 1. WSL-i installeerimine:
 Ava command prompt või PowerShell ning kirjuta järgnev käsk. Lisainfo saab [siit](https://learn.microsoft.com/en-us/windows/wsl/setup/environment#get-started).
@@ -33,4 +33,51 @@ Viimane nõue enne Apptainer'i installeerimist on libsubid toetus:
 sudo apt-get install -y libsubid-dev
 ```
 ### 2.1. Go installeerimine:
-Go on keel milles Apptainer on kirjutatud, mistõttu on ka vaja see saada.
+Go on keel milles Apptainer on kirjutatud, selle saamiseks sisesta iga käsklus eraldi (wget käsu jaoks olev versioon on muutuv ning selle lingi leiab [siit](https://go.dev/dl/). Kopeeri kõige uuema versiooni link).
+```
+cd /tmp
+wget https://go.dev/dl/go1.23.4.linux-amd64.tar.gz
+sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.23.4.linux-amd64.tar.gz
+export PATH=$PATH:/usr/local/go/bin
+```
+Seejärel võid kasutada käsklust "go version" ning tulemusena peaks andma vastama versiooni näiteks: "go version go1.23.4 linux/amd64"
+![image](https://github.com/user-attachments/assets/b89ece01-e7bc-4a0a-9bc4-c6259cd8afcb)
+
+### 2.2. golangci-lint installeerimine:
+See ei ole kahjuks kõik, Apptainer nõuab palju. Järgmisena on vaja ühte töövahendit, mis tagab Apptainer'is koodi järjekindlust.
+```
+curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.59.1
+```
+Seejärel:
+```
+echo 'export PATH=$PATH:$(go env GOPATH)/bin' >> ~/.bashrc
+source ~/.bashrc
+```
+
+### 2.2. Repository kloonimine ja kompileerimine:
+Siin võid asukoha valida ise (kindel kaust vms, kus eelistad hoida) kuna Go installeerimine enne eemaldas kindla asukohaga seotud vajaduse. Muidugi võid lihtsalt n-ö otse lasta ja mitte midagi muuta.
+```
+git clone https://github.com/apptainer/apptainer.git
+cd apptainer
+```
+Kompileerimiseks tuleb kasutada järgmisi käsklusi (see võib võtta päris kaua):
+```
+./mconfig
+cd $(/bin/pwd)/builddir
+make
+sudo make install
+```
+Peale pikka kompileerimist saab kontrollida, juhul kui installatsiooni käigus juba probleeme ei olnud, et kõik on ikka korras, Apptainer'i versiooni kasutades käsklust:
+```
+apptainer --version
+```
+Sellega peaks eeltööga olema kõik.
+
+# Ülesanne
+Palju õnne, kogu eelmise tegemisega sai EELTÖÖ tehtud, nüüd saab reaalse ülesande poolega alustada. Muidugi enne lahendamist on mõningaid asju veel vaja alla laadida. Esiteks tee koopia MRS school repository'st. Selleks vajuta github leheküljel paremal üleval olevat pluss märki, seejärel import repository (sellega läheb aega). Kui on olemas saad vajaliku alla laadida käsklustega:
+```
+mkdir -p ${HOME}/git
+cd ${HOME}/git && git clone <your new repository's link>
+```
+## 1. MRS UAV System installeerimine
+Allikas [siit](https://github.com/ctu-mrs/mrs_uav_system). Süsteemi tööle saamiseks on vaja ROS'i (robot operating system, siin ka ütleb et peaks Noetic). Probleem sellega on, et WSL laeb uuema Ubuntu versiooni alla, mis tähendab, et ei ole võimalik ROS Noetic kasutada (kuna see nõuab Ubuntu 20.4). Seega peab proovima ROS2-ga, täpsemalt Jazzy versioon. https://docs.ros.org/en/jazzy/Installation/Alternatives/Ubuntu-Development-Setup.html
