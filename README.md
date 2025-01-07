@@ -3,9 +3,9 @@
 Ülesande mõte on saada UAV lendamise simuleerimine tööle Linux'il ning seejärel optimeerida lendamistrajektoori MRS keskkonnas (Multi-robot Systems Group UAV system), kasutades Apptainer'it. Ülesanne põhineb "MRS Summer School 2024" ning on tehtud eesti keelseks Robotitehnika aine raames. See juhend pole 1-1 ning on proovitud teha võimalikult lihtsalt ja jälgitavaks (lisades kirjeldusi erinevatele lisaprotsessidele), kuid ülesannet selgitava juhendi saab leida MRS summer school [github](https://github.com/ctu-mrs/summer-school-2024)'i lehelt.
 
 ## 1. WSL-i installeerimine:
-Ava command prompt või PowerShell ning kirjuta järgnev käsk. Lisainfo saab [siit](https://learn.microsoft.com/en-us/windows/wsl/setup/environment#get-started).
+Ava command prompt või PowerShell ning kirjuta järgnev käsk. Lisainfo saab [siit](https://learn.microsoft.com/en-us/windows/wsl/setup/environment#get-started). (NB! Lihtsalt wsl --install annab 22.04 versiooni, see ei lase ROS Noetic hiljem installeerida)
 ```
-wsl --install
+wsl --install -d Ubuntu-20.04
 ```
 Seejärel tee arvutile restart. Taaskäivitusel peaks süsteem automaatselt küsima Linux'i jaoks kasutajanime ja parooli (soovitav on panna midagi, mis meelest ei lähe).
 
