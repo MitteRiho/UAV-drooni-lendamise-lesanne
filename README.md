@@ -68,6 +68,8 @@ Peale pikka kompileerimist saab kontrollida, juhul kui installatsiooni käigus j
 ```
 apptainer --version
 ```
+![image](https://github.com/user-attachments/assets/15c220c4-12f0-452f-ad8f-33b9280a41e5)
+
 Sellega peaks eeltööga olema kõik.
 
 # Ülesanne
