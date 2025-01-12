@@ -28,10 +28,7 @@ sudo apt-get install -y \
     dh-apparmor \
     curl wget git
 ```
-Viimane nõue enne Apptainer'i installeerimist on libsubid toetus:
-```
-sudo apt-get install -y libsubid-dev
-```
+
 ### 2.1. Go installeerimine:
 Go on keel milles Apptainer on kirjutatud, selle saamiseks sisesta iga käsklus eraldi (wget käsu jaoks olev versioon on muutuv ning selle lingi leiab [siit](https://go.dev/dl/). Kopeeri kõige uuema versiooni link).
 ```
