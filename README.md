@@ -38,6 +38,7 @@ sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.23.4.linux-amd64.ta
 export PATH=$PATH:/usr/local/go/bin
 ```
 Seejärel võid kasutada käsklust "go version" ning tulemusena peaks andma vastama versiooni näiteks: "go version go1.23.4 linux/amd64"
+
 ![image](https://github.com/user-attachments/assets/b89ece01-e7bc-4a0a-9bc4-c6259cd8afcb)
 
 ### 2.2. golangci-lint installeerimine:
@@ -78,10 +79,59 @@ Palju õnne, kogu eelmise tegemisega sai EELTÖÖ tehtud, nüüd saab reaalse ü
 mkdir -p ${HOME}/git
 cd ${HOME}/git && git clone <sinu koopia url>
 ```
-## 1. MRS UAV System installeerimine
-Allikas [siit](https://github.com/ctu-mrs/mrs_uav_system). Süsteemi tööle saamiseks on vaja ROS'i (robot operating system, siin ka ütleb et peaks Noetic). Probleem sellega on, et WSL laeb uuema Ubuntu versiooni alla, mis tähendab, et ei ole võimalik ROS Noetic kasutada (kuna see nõuab Ubuntu 20.4). Seega peab proovima ROS2-ga, täpsemalt Jazzy versioon. https://docs.ros.org/en/jazzy/Installation/Alternatives/Ubuntu-Development-Setup.html
+See laeb alla kõik vajaliku. Kui soov teha eraldi või on midagi puudu saab vaadata juhendi lõpust manuaalset verisooni.
+```
+cd ${HOME}/git/summer-school-2024 && ./install.sh
+```
+Tulemus võiks olla midagi sellist:
+![image](https://github.com/user-attachments/assets/a0ef6cc5-5a38-4218-89ea-81ec9ddaa0fb)
+
+
+Selleks, et esiteks simulatsiooniga alustada on olemas paar võimalust. Simulatsioonide alustamiseks peaks paiknema vastavas kaustas, näide: "kasutaja@arvuti:~/git/koopianimi$". Linux-is navigeerimine toimub "cd" käsklusega.
+
+**1. Offline, mitte simuleeriv versioon (soovitatav variant)**
+
+Käivitamiseks on käsklus
+```
+./simulation/run_offline.sh
+```
+![image](https://github.com/user-attachments/assets/39c67ac3-235b-449e-b698-4b6102dedfef)
+
+**2. Online, süsteemi simuleerimine lokaalselt**
+
+Käivitamiseks on käsklus
+```
+./simulation/run_simulation.sh
+```
+
+Lõpetamiseks on käsklus
+```
+./simulation/kill_simulation.sh
+```
+
+Ülesande lahendamiseks/mõistmiseks kasuta https://github.com/ctu-mrs/summer-school-2024, peamiselt nõuab python failide muutmist, et optimeerida drooni lendamist. Failid, mida muuta, leiad ```kaustanimi/mrim_task/mrim_planner``` kaustast.
+
+- ```scripts/```
+    - ```planner.py```: siit leiab näiteid ning ideid, kuidas lahendada
+    - ```trajectory.py```: sisaldab funktsioone, mis on seotud trajektooriga. Siia saab näiteks lisada interpoleerimist.
+    - ```solvers/```
+        - ```tsp_solvers.py```: 
+        - ```utils.py```:
+    - ```path_planners/grid_based```
+        - ```aster.py```
+    - ```path_planners/sampling_based```
+        - ```rrt.py```
+    - ```config/```
+        - ```virtual.yaml``` ja ```real_world.yaml```
+
+
+
+
+## *MRS UAV System installeerimine (eraldi)
+Allikas [siit](https://github.com/ctu-mrs/mrs_uav_system). Süsteemi tööle saamiseks on vaja ROS'i (robot operating system, siin ka ütleb et peaks Noetic). Kui esialgu sai korrektselt alla laaditud 20.4 versioon Ubuntu'st ning mitte kõige uuem versioon, mis wsl --install käsklus annab, peaks see minema sujuvalt.
 
 ### 1.1 ROS (Noetic)
+läheb väga kaua aega.
 ```
 curl https://ctu-mrs.github.io/ppa-stable/add_ros_ppa.sh | bash
 sudo apt install ros-noetic-desktop-full
@@ -89,13 +139,13 @@ sudo apt install ros-noetic-desktop-full
 
 ### 1.2 rosbuild
 ```
+sudo apt install python3-rosinstall
+```
+```
 rosws init ~/noetic_workspace /opt/ros/noetic
 ```
 ```
 source /home/<kasutajanimi>/noetic_workspace/setup.bash
-```
-```
-sudo apt-get install python3-rosinstall
 ```
 ```
 mkdir ~/noetic_workspace/sandbox
@@ -107,7 +157,7 @@ rosws set ~/noetic_workspace/sandbox
 curl https://ctu-mrs.github.io/ppa-stable/add_ppa.sh | bash
 ```
 
-Selle käsklusega läheb päris kaua
+Selle käsklusega läheb natuke aega
 ```
 sudo apt install ros-noetic-mrs-uav-system-full
 ```
@@ -116,12 +166,18 @@ sudo apt install ros-noetic-mrs-uav-system-full
 roscd mrs_uav_gazebo_simulation/tmux/one_drone
 ./start.sh
 ```
+./start.sh käsklusega peaks avanema väike simulatsioon (kolm erinevat akent)
+![image](https://github.com/user-attachments/assets/07034f64-8d90-4a7d-8ab0-b8ee4a649422)
+![Screenshot 2025-01-15 135637](https://github.com/user-attachments/assets/dbb886c8-4937-4263-aa56-75cb55227e7f)
+![Screenshot 2025-01-15 135627](https://github.com/user-attachments/assets/a65575e4-e24f-4a53-aba6-fe4099455654)
 
 ### Probleemide korral
-Kui tekib probleeme, mis on tõenäoline ROSiga (näiteks laed vale ROS versiooni nagu mina), kasuta järgmisi käsklusi, et eelnevad teod kustutada ning alusta otsast peale.
+Kui tekib probleeme, mis on tõenäoline ROSiga (näiteks laed vale ROS versiooni nagu mina), kasuta järgmisi käsklusi (eraldi, koos, kombinatsioonina vms), et eelnevad teod kustutada ning alusta otsast peale. Gedit on mõeldud .bashrc faili muutmiseks, juhul kui sinna vajadus manuaalselt lisada/eemaldada käsklusi. Viimase kahe käsklusega saab ROS-iga seotud kaustad, failid eemaldada. Juhul kui neist pole piisav on ka variant Ubuntu deinstalleerida ja alustada otsast peale.
 ```
 gedit .bashrc
 rm -rf ~/ros
 sudo rm /etc/apt/sources.list.d/ros-latest.list
 ```
+Samuti võib vaadata MRS cheatsheet-i programmis navigeerimise jaoks
+https://github.com/ctu-mrs/mrs_cheatsheet
 
