@@ -126,6 +126,7 @@ Lõpetamiseks on käsklus
         - ```virtual.yaml``` ja ```real_world.yaml```: erinevad ülesandega seotud parameetrid.
 
 Koodi muutmiseks saab süsteemi sees kasutada Python keskkonda kasutades käsklust ```pycharm.sh``` ning hiljem ```03_compile.sh```, sarnaselt simulatsiooni stardile (näide: ```./simulation/pycharm.sh```). Kasutades PyCharm'i läbi MRS'i annab PyCharm ka kõik õiged koodi failid, mistõttu ei pea ise otsima hakkama. Muidugi võid muutmiseks muud programmi kasutada. 
+
 ![image](https://github.com/user-attachments/assets/c74b5ba7-c708-4b1d-a44e-b9e65166fa92)
 
 
