@@ -76,7 +76,7 @@ Sellega peaks eeltööga olema kõik.
 Palju õnne, kogu eelmise tegemisega sai EELTÖÖ tehtud, nüüd saab reaalse ülesande poolega alustada. Muidugi enne lahendamist on mõningaid asju veel vaja alla laadida. Esiteks tee koopia MRS school repository'st. Selleks vajuta github leheküljel paremal üleval olevat pluss märki, seejärel import repository (sellega läheb aega). Kui on olemas saad vajaliku alla laadida käsklustega:
 ```
 mkdir -p ${HOME}/git
-cd ${HOME}/git && git clone <your new repository's link>
+cd ${HOME}/git && git clone <sinu koopia url>
 ```
 ## 1. MRS UAV System installeerimine
 Allikas [siit](https://github.com/ctu-mrs/mrs_uav_system). Süsteemi tööle saamiseks on vaja ROS'i (robot operating system, siin ka ütleb et peaks Noetic). Probleem sellega on, et WSL laeb uuema Ubuntu versiooni alla, mis tähendab, et ei ole võimalik ROS Noetic kasutada (kuna see nõuab Ubuntu 20.4). Seega peab proovima ROS2-ga, täpsemalt Jazzy versioon. https://docs.ros.org/en/jazzy/Installation/Alternatives/Ubuntu-Development-Setup.html
@@ -92,7 +92,7 @@ sudo apt install ros-noetic-desktop-full
 rosws init ~/noetic_workspace /opt/ros/noetic
 ```
 ```
-source /home/<username>/noetic_workspace/setup.bash
+source /home/<kasutajanimi>/noetic_workspace/setup.bash
 ```
 ```
 sudo apt-get install python3-rosinstall
