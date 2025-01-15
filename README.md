@@ -157,7 +157,7 @@ mkdir ~/noetic_workspace/sandbox
 rosws set ~/noetic_workspace/sandbox
 ```
 
-### LISA.3 MRS
+### LISA.3 MRS UAV
 Lisa stabiilne versioon enda repository-sse käsklusega:
 ```
 curl https://ctu-mrs.github.io/ppa-stable/add_ppa.sh | bash
@@ -174,7 +174,7 @@ roscd mrs_uav_gazebo_simulation/tmux/one_drone
 ```
 ./start.sh käsklusega peaks avanema väike simulatsioon (kolm erinevat akent)
 ![image](https://github.com/user-attachments/assets/07034f64-8d90-4a7d-8ab0-b8ee4a649422)
-![Screenshot 2025-01-15 135637](https://github.com/user-attachments/assets/dbb886c8-4937-4263-aa56-75cb55227e7f)
+![Screenshot 2025-01-15 135637](https://github.com/user-attachments/assets/bfb2a624-df40-4ac4-879c-b32afb226ac7)
 ![Screenshot 2025-01-15 135627](https://github.com/user-attachments/assets/a65575e4-e24f-4a53-aba6-fe4099455654)
 
 ### Probleemide korral
