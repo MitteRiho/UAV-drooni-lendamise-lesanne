@@ -125,7 +125,7 @@ Lõpetamiseks on käsklus
     - ```config/```
         - ```virtual.yaml``` ja ```real_world.yaml```: erinevad ülesandega seotud parameetrid.
 
-Koodi muutmiseks saab süsteemi sees kasutada Python keskkonda kasutades käsklust ```pycharm.sh``` ning hiljem ```03_compile.sh```, sarnaselt simulatsiooni stardile.
+Koodi muutmiseks saab süsteemi sees kasutada Python keskkonda kasutades käsklust ```pycharm.sh``` ning hiljem ```03_compile.sh```, sarnaselt simulatsiooni stardile. Näide: ```./simulation/pycharm.sh```
 
 
 
