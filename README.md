@@ -96,6 +96,7 @@ Käivitamiseks on käsklus
 ./simulation/run_offline.sh
 ```
 ![image](https://github.com/user-attachments/assets/39c67ac3-235b-449e-b698-4b6102dedfef)
+Nagu näha, esialgne trajektoor ei ole piisav ning efektiivsusest kaugel.
 
 **2. Online, süsteemi simuleerimine lokaalselt**
 
